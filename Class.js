@@ -24,7 +24,7 @@
 		return parent;
 	}
 	
-	scope.Class = function(options) {
+	scope.createClass = function(options) {
 		if (typeof options === 'function') {
 			options = {define: options};
 		}
@@ -39,6 +39,7 @@
 		var Child = function() {
 			var child  = (typeof Define === 'function') ? new Define() : Define,
 			    isInit = classInit,
+			    override,
 			    parent,
 			    i;
 			
@@ -48,16 +49,18 @@
 				parent    = new Extend();
 				classInit = isInit;
 				
+				override = function(child, parent) {
+					return function() {
+						this.parent = parent;
+						
+						return child.apply(this, arguments);
+					};
+				};
+				
 				for (i in parent) {
 					if (typeof parent[i] === 'function') {
 						if (child[i]) {
-							child[i] = (function(child, parent) {
-								return function() {
-									this.parent = parent;
-									
-									return child.apply(this, arguments);
-								};
-							}(child[i], parent[i]));
+							child[i] = override(child[i], parent[i]);
 						} else {
 							child[i] = parent[i];
 						}
