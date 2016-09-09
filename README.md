@@ -69,7 +69,7 @@ console.log(proPerson.getName(), proPerson.getProfession());
 
 ### Defining a Class
 
-There a many different philosophies on creating class-like structures in JavaScript. `createClass` aims to work with as many of these styles as possible and supports mixed styles throughout your project. The following are some common styles that all work to define the same class:
+There are many different philosophies on creating class-like structures in JavaScript. `createClass` aims to work with as many of these styles as possible and supports mixed styles throughout your project. The following are some common styles that will work to define the same class:
 
 ```js
 createClass(function Person() {
